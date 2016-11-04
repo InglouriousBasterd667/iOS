@@ -12,6 +12,7 @@ class ViewController: UIViewController {
     
     
     @IBOutlet private weak var display: UILabel!
+    @IBOutlet weak var DescriptionLabel: UILabel!
     
     private var userInMiddleOfTyping = false
     
@@ -19,12 +20,15 @@ class ViewController: UIViewController {
         let digit = sender.currentTitle!
         if(userInMiddleOfTyping){
             let textOnDisplay = display.text!
-            display.text = textOnDisplay + digit
+            if !(textOnDisplay.contains(".") && digit == ".") {
+                display.text = textOnDisplay + digit
+            }
         }
         else{
             display.text = digit
         }
         userInMiddleOfTyping = true
+        
     }
     
     private var displayValue: Double {
@@ -46,6 +50,16 @@ class ViewController: UIViewController {
         if let mathematicalSymbol = sender.currentTitle{
             brain.performOperation(symbol: mathematicalSymbol!)
         }
+        if brain.isPartialResult{
+            DescriptionLabel.text = brain.description + "..."
+            
+        }
+        else{
+            DescriptionLabel.text = brain.description + "="
+            brain.description = ""
+            brain.isPartialResult = true
+        }
+        
         displayValue = brain.result
     }
     
