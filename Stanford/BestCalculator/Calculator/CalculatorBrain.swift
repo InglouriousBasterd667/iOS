@@ -12,6 +12,7 @@ import Foundation
 class CalculatorBrain{
     
     private var accumulator = 0.0
+    private var internalProgram = [AnyObject]()
     private var pending: PendingBinaryOperation?
     
     private var operations: Dictionary<String, Operation> = [
@@ -49,13 +50,38 @@ class CalculatorBrain{
         }
     }
     
+    typealias PropertiesList = AnyObject
+    
+    var Program: PropertiesList{
+        get{
+            return internalProgram as CalculatorBrain.PropertiesList
+        }
+        set{
+            clear()
+            if let arrayOfOps = newValue as? [AnyObject]{
+                for op in arrayOfOps{
+                    if let operand = op as? Double{
+                        setOperand(operand)
+                    } else if let operation = op as? String{
+                        performOperation(symbol: operation)
+                    }
+                    
+                }
+            }
+        }
+    }
+    
     var description: String = ""
     var isPartialResult: Bool = true
     
+    func clear(){
+        accumulator = 0.0
+        pending = nil
+        internalProgram.removeAll()
+    }
     func setOperand(_ operand:Double){
         accumulator = operand
-//        description += String(operand)
-        
+        internalProgram.append(operand as AnyObject)
     }
     
     private func executePendingOperation(){
@@ -67,6 +93,7 @@ class CalculatorBrain{
     
     func performOperation(symbol:String)  {
         if let operation = operations[symbol]{
+            internalProgram.append(symbol as AnyObject)
             switch operation{
             case .Constant(let value):
                 accumulator = value

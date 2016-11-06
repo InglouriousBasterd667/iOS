@@ -57,6 +57,19 @@ class ViewController: UIViewController {
         displayValue = brain.result
     }
     
+    var savedProgram: CalculatorBrain.PropertiesList?
+    
+    @IBAction func Save() {
+        savedProgram = brain.Program
+    }
+
+    @IBAction func Restore() {
+        if savedProgram != nil{
+            brain.Program = savedProgram!
+            displayValue = brain.result
+        }
+    }
+    
     @IBAction func Delete(_ sender: AnyObject) {
         if var displayText = display.text{
             displayText.remove(at: displayText.index(before: displayText.endIndex))
