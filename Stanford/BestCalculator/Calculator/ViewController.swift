@@ -1,10 +1,4 @@
-//
-//  ViewController.swift
-//  Calculator
-//
-//  Created by Mikhail Lyapich on 28.10.16.
-//  Copyright © 2016 Mikhail Lyapich. All rights reserved.
-//
+
 
 import UIKit
 
@@ -12,7 +6,7 @@ class ViewController: UIViewController {
     
     
     @IBOutlet private weak var display: UILabel!
-    @IBOutlet weak var DescriptionLabel: UILabel!
+    @IBOutlet weak var descriptionLabel: UILabel!
     
     private var userInMiddleOfTyping = false
     
@@ -51,11 +45,11 @@ class ViewController: UIViewController {
             brain.performOperation(symbol: mathematicalSymbol!)
         }
         if brain.isPartialResult{
-            DescriptionLabel.text = brain.description + "..."
+            descriptionLabel.text = brain.description + "..."
             
         }
         else{
-            DescriptionLabel.text = brain.description + "="
+            descriptionLabel.text = brain.description + "="
             brain.description = ""
             brain.isPartialResult = true
         }
@@ -63,5 +57,24 @@ class ViewController: UIViewController {
         displayValue = brain.result
     }
     
+    @IBAction func Delete(_ sender: AnyObject) {
+        if var displayText = display.text{
+            displayText.remove(at: displayText.index(before: displayText.endIndex))
+            if displayText.characters.count == 0{
+                display.text = "0"
+                userInMiddleOfTyping = false
+            }
+            else{
+                display.text = displayText
+            }
+        }
+    }
+    
+    @IBAction func Clear(_ sender: UIButton) {
+        brain = CalculatorBrain()
+        userInMiddleOfTyping = false
+        display.text = "0"
+        descriptionLabel.text = ""
+    }
 }
 
