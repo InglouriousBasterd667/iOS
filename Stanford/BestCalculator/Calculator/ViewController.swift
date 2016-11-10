@@ -21,25 +21,37 @@ class ViewController: UIViewController {
         else{
             display.text = digit
         }
-        userInMiddleOfTyping = true
+        if displayValue == nil{
+            display.text = ""
+            userInMiddleOfTyping = false
+        }
+        else{
+            userInMiddleOfTyping = true
+        }
         
     }
     
-    private var displayValue: Double {
+    private var displayValue: Double? {
         get{
-            return Double(display.text!)!
+            return Double(display.text!)
         }
         set{
-            display.text = String(newValue)
+            var formatter:NumberFormatter = NumberFormatter()
+            formatter.usesSignificantDigits = true
+            
+            display.text = String(newValue!)
         }
     }
     
     private var brain = CalculatorBrain()
     
     @IBAction private func performOperation(_ sender: AnyObject) {
+        
         if userInMiddleOfTyping{
-            brain.setOperand(displayValue)
-            userInMiddleOfTyping = false
+            if let numberOnScreen = displayValue{
+                brain.setOperand(numberOnScreen)
+                userInMiddleOfTyping = false
+            }
         }
         if let mathematicalSymbol = sender.currentTitle{
             brain.performOperation(symbol: mathematicalSymbol!)
