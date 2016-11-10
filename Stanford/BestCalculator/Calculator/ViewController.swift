@@ -9,6 +9,14 @@ class ViewController: UIViewController {
     @IBOutlet weak var descriptionLabel: UILabel!
     
     private var userInMiddleOfTyping = false
+    private let formatter:NumberFormatter = NumberFormatter()
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        formatter.numberStyle = NumberFormatter.Style.decimal
+        formatter.maximumFractionDigits = 3
+    }
+    
     
     @IBAction private func touchDigit(_ sender: UIButton) {
         let digit = sender.currentTitle!
@@ -36,10 +44,7 @@ class ViewController: UIViewController {
             return Double(display.text!)
         }
         set{
-            var formatter:NumberFormatter = NumberFormatter()
-            formatter.usesSignificantDigits = true
-            
-            display.text = String(newValue!)
+            display.text = formatter.string(from: NSNumber(value: newValue!))
         }
     }
     
