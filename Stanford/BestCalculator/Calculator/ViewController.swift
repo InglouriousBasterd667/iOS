@@ -9,9 +9,11 @@ class ViewController: UIViewController {
     @IBOutlet weak var descriptionLabel: UILabel!
     
     private var userInMiddleOfTyping = false
+    private var brain:CalculatorBrain
     private let formatter:NumberFormatter = NumberFormatter()
     
     required init?(coder aDecoder: NSCoder) {
+        self.brain = CalculatorBrain(formatter)
         super.init(coder: aDecoder)
         formatter.numberStyle = NumberFormatter.Style.decimal
         formatter.maximumFractionDigits = 3
@@ -48,7 +50,6 @@ class ViewController: UIViewController {
         }
     }
     
-    private var brain = CalculatorBrain()
     
     @IBAction private func performOperation(_ sender: AnyObject) {
         
@@ -101,7 +102,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func Clear(_ sender: UIButton) {
-        brain = CalculatorBrain()
+        brain = CalculatorBrain(formatter)
         userInMiddleOfTyping = false
         display.text = "0"
         descriptionLabel.text = ""
