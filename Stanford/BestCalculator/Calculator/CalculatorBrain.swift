@@ -80,25 +80,23 @@ class CalculatorBrain{
         self.formatter = formatter
     }
     
-    func performPreviousOperations(){
+    func performPreviousOperations(from operationsArray:[AnyObject]){
         clear()
-        let descriptionState = description
-        for op in internalProgram{
+        for op in operationsArray {
             if let operand = op as? Double{
                 setOperand(operand)
             } else if let operation = op as? String{
-                if let value = variableValues[operation]{
-                    setOperand(value)
+                if variableValues[operation] != nil{
+                    setOperand(variable: operation)
                 }
                 performOperation(symbol: operation)
             }
         }
-        description = descriptionState
-        isPartialResult = true
     }
     
 
     func clear(){
+        description = ""
         accumulator = 0.0
         pending = nil
     }
@@ -124,6 +122,15 @@ class CalculatorBrain{
         }
     }
     
+    func Undo(){
+        if internalProgram.count > 0{
+            internalProgram.removeLast()
+            let temp = internalProgram
+            internalProgram = []
+            performPreviousOperations(from:temp)
+        }
+    }
+    
     func performOperation(symbol:String)  {
         if let operation = operations[symbol]{
             internalProgram.append(symbol as AnyObject)
@@ -132,7 +139,7 @@ class CalculatorBrain{
                 accumulator = value
                 description += symbol
             case .Unary(let function):
-                if isPartialResult{
+                if !isPartialResult{
                     //let toAdd = symbol + formatter.string(from:NSNumber (value: accumulator))!
                     //description += toAdd
                     description = symbol + "(\(description))"
@@ -140,9 +147,6 @@ class CalculatorBrain{
                 accumulator = function(accumulator)
                 isPartialResult = false
             case .Binary(let function):
-                if (isPartialResult){
-                    // description += formatter.string(from:NSNumber (value: accumulator))!
-                }
                 if symbol == "×"{
                     description = "(\(description))"
                 }

@@ -53,7 +53,6 @@ class ViewController: UIViewController {
     
     
     @IBAction private func performOperation(_ sender: UIButton) {
-        
         if userInMiddleOfTyping{
             if let numberOnScreen = displayValue{
                 brain.setOperand(numberOnScreen)
@@ -65,13 +64,10 @@ class ViewController: UIViewController {
         }
         if brain.isPartialResult{
             descriptionLabel.text = brain.description + "..."
-            
         }
         else{
             descriptionLabel.text = brain.description + "="
-            brain.isPartialResult = true
         }
-        
         displayValue = brain.result
     }
     
@@ -79,7 +75,7 @@ class ViewController: UIViewController {
     
     @IBAction func SetVariable(_ sender: UIButton) {
         brain.variableValues["X"] = displayValue
-        brain.performPreviousOperations()
+        brain.performPreviousOperations(from:brain.Program as! [AnyObject])
         displayValue = brain.result
         userInMiddleOfTyping = false
     }
@@ -102,6 +98,23 @@ class ViewController: UIViewController {
     }
     
     @IBAction func Delete(_ sender: AnyObject) {
+        if userInMiddleOfTyping{
+            Backspace()
+        }
+        else{
+            brain.Undo()
+            if brain.isPartialResult{
+                descriptionLabel.text = brain.description + "..."
+            }
+            else{
+                descriptionLabel.text = brain.description + "="
+                brain.isPartialResult = true
+            }
+            
+        }
+    }
+    
+    private func Backspace(){
         if var displayText = display.text{
             displayText.remove(at: displayText.index(before: displayText.endIndex))
             if displayText.characters.count == 0{
@@ -113,6 +126,8 @@ class ViewController: UIViewController {
             }
         }
     }
+    
+
     
     @IBAction func Clear(_ sender: UIButton) {
         brain = CalculatorBrain(formatter)
