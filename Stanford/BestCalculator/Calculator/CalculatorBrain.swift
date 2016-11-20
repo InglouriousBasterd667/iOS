@@ -31,6 +31,9 @@ class CalculatorBrain{
         "÷" : Operation.Binary({ $0 / $1 }),
         "pow" : Operation.Binary({ pow($0, $1) }),
         "rand" : Operation.Random,
+        "X" : Operation.Variable,
+        "y" : Operation.Variable,
+        "M" : Operation.Variable,
         "=" : Operation.Equal
     ]
 
@@ -38,6 +41,7 @@ class CalculatorBrain{
         case Constant(Double)
         case Unary((Double)->Double)
         case Binary((Double, Double)->Double)
+        case Variable
         case Random
         case Equal
     }
@@ -46,6 +50,8 @@ class CalculatorBrain{
         var binaryFunction: (Double,Double)->Double
         var firstOperand: Double
     }
+    
+    var variableValues = [String:Double]()
     
     var result: Double{
         get{
@@ -61,15 +67,8 @@ class CalculatorBrain{
         }
         set{
             clear()
-            if let arrayOfOps = newValue as? [AnyObject]{
-                for op in arrayOfOps{
-                    if let operand = op as? Double{
-                        setOperand(operand)
-                    } else if let operation = op as? String{
-                        performOperation(symbol: operation)
-                    }
-                    
-                }
+            if let savedProgram = newValue as? [AnyObject]{
+                internalProgram = savedProgram
             }
         }
     }
@@ -81,15 +80,42 @@ class CalculatorBrain{
         self.formatter = formatter
     }
     
+    func performPreviousOperations(){
+        clear()
+        let descriptionState = description
+        for op in internalProgram{
+            if let operand = op as? Double{
+                setOperand(operand)
+            } else if let operation = op as? String{
+                if let value = variableValues[operation]{
+                    setOperand(value)
+                }
+                performOperation(symbol: operation)
+            }
+        }
+        description = descriptionState
+        isPartialResult = true
+    }
+    
+
     func clear(){
         accumulator = 0.0
         pending = nil
-        internalProgram.removeAll()
     }
+    
     func setOperand(_ operand:Double){
         accumulator = operand
+        description += formatter.string(from:NSNumber (value: accumulator))!
         internalProgram.append(operand as AnyObject)
     }
+
+    func setOperand(variable: String){
+        accumulator = variableValues[variable] ?? 0.0
+        description += variable
+        internalProgram.append(variable as AnyObject)
+    }
+    
+    
     
     private func executePendingOperation(){
         if pending != nil{
@@ -107,17 +133,15 @@ class CalculatorBrain{
                 description += symbol
             case .Unary(let function):
                 if isPartialResult{
-                    let toAdd = symbol + formatter.string(from:NSNumber (value: accumulator))!
-                    description += toAdd
-                }
-                else{
+                    //let toAdd = symbol + formatter.string(from:NSNumber (value: accumulator))!
+                    //description += toAdd
                     description = symbol + "(\(description))"
                 }
                 accumulator = function(accumulator)
                 isPartialResult = false
             case .Binary(let function):
                 if (isPartialResult){
-                    description += formatter.string(from:NSNumber (value: accumulator))!
+                    // description += formatter.string(from:NSNumber (value: accumulator))!
                 }
                 if symbol == "×"{
                     description = "(\(description))"
@@ -129,10 +153,9 @@ class CalculatorBrain{
             case .Random:
                 accumulator = drand48()
                 description += formatter.string(from:NSNumber (value: accumulator))!
+            case .Variable:
+                accumulator = variableValues[symbol] ?? 0.0
             case .Equal:
-                if (isPartialResult){
-                    description += formatter.string(from:NSNumber (value: accumulator))!
-                }
                 isPartialResult = false
                 executePendingOperation()
             }

@@ -14,6 +14,7 @@ class ViewController: UIViewController {
     
     required init?(coder aDecoder: NSCoder) {
         self.brain = CalculatorBrain(formatter)
+        self.brain.variableValues = ["x":1, "y":2]
         super.init(coder: aDecoder)
         formatter.numberStyle = NumberFormatter.Style.decimal
         formatter.maximumFractionDigits = 3
@@ -51,7 +52,7 @@ class ViewController: UIViewController {
     }
     
     
-    @IBAction private func performOperation(_ sender: AnyObject) {
+    @IBAction private func performOperation(_ sender: UIButton) {
         
         if userInMiddleOfTyping{
             if let numberOnScreen = displayValue{
@@ -60,7 +61,7 @@ class ViewController: UIViewController {
             }
         }
         if let mathematicalSymbol = sender.currentTitle{
-            brain.performOperation(symbol: mathematicalSymbol!)
+            brain.performOperation(symbol: mathematicalSymbol)
         }
         if brain.isPartialResult{
             descriptionLabel.text = brain.description + "..."
@@ -68,7 +69,6 @@ class ViewController: UIViewController {
         }
         else{
             descriptionLabel.text = brain.description + "="
-            brain.description = ""
             brain.isPartialResult = true
         }
         
@@ -76,6 +76,18 @@ class ViewController: UIViewController {
     }
     
     var savedProgram: CalculatorBrain.PropertiesList?
+    
+    @IBAction func SetVariable(_ sender: UIButton) {
+        brain.variableValues["X"] = displayValue
+        brain.performPreviousOperations()
+        displayValue = brain.result
+        userInMiddleOfTyping = false
+    }
+    
+    @IBAction func AddVariable(_ sender: UIButton) {
+        brain.setOperand(variable: sender.currentTitle!)
+        displayValue = brain.result
+    }
     
     @IBAction func Save() {
         savedProgram = brain.Program
@@ -85,6 +97,7 @@ class ViewController: UIViewController {
         if savedProgram != nil{
             brain.Program = savedProgram!
             displayValue = brain.result
+            
         }
     }
     
