@@ -2,24 +2,32 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class CalculatorViewController: UIViewController {
     
     
     @IBOutlet private weak var display: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
     
     private var userInMiddleOfTyping = false
-    private var brain:CalculatorBrain
+    private var brain:CalculatorBrain!
     private let formatter:NumberFormatter = NumberFormatter()
     
-    required init?(coder aDecoder: NSCoder) {
-        self.brain = CalculatorBrain(formatter)
-        self.brain.variableValues = ["x":1, "y":2]
-        super.init(coder: aDecoder)
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
         formatter.numberStyle = NumberFormatter.Style.decimal
         formatter.maximumFractionDigits = 3
+        self.brain = CalculatorBrain(formatter)
+        self.brain.variableValues = ["x":1, "y":2]
     }
-    
+   
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let destinationvc = segue.destination
+        if let graphvc = destinationvc as? GraphViewController{
+            graphvc.updateLabel("hahahaha")
+        }
+        
+    }
     
     @IBAction private func touchDigit(_ sender: UIButton) {
         let digit = sender.currentTitle!
