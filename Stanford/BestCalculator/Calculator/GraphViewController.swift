@@ -10,17 +10,15 @@ import UIKit
 
 class GraphViewController: UIViewController {
 
-
-    @IBOutlet weak var str: UILabel!
-    private var tochangeStr:String?
     
-    func updateLabel(_ s: String){
-        tochangeStr = s
-    }
+    var graphFunc: ((Double) -> Double)?{ didSet{updateUI()}}
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        str.text = tochangeStr
+    
+    @IBOutlet var graphView: GraphView!
+   
+    
+    private func updateUI(){
+        graphView.funcToDraw = graphFunc
     }
     /*
     // MARK: - Navigation

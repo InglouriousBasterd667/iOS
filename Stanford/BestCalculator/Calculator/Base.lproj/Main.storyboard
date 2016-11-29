@@ -17,19 +17,10 @@
                     <view key="view" contentMode="scaleToFill" id="atV-Ot-9PZ" customClass="GraphView" customModule="Calculator" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cjl-96-Lyd">
-                                <frame key="frameInset" minX="225" minY="263" width="42" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
-                        <outlet property="str" destination="Cjl-96-Lyd" id="weM-MV-yqU"/>
+                        <outlet property="graphView" destination="atV-Ot-9PZ" id="3Sv-G9-iuk"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="E79-te-7uj" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -115,7 +106,7 @@
                                                                     <color key="titleShadowColor" cocoaTouchSystemColor="darkTextColor"/>
                                                                 </state>
                                                                 <connections>
-                                                                    <action selector="performOperation:" destination="BYZ-38-t0r" eventType="touchUpInside" id="SoS-m4-Mav"/>
+                                                                    <action selector="perform:" destination="BYZ-38-t0r" eventType="touchUpInside" id="SoS-m4-Mav"/>
                                                                 </connections>
                                                             </button>
                                                             <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zAT-3w-GWW">
@@ -144,7 +135,7 @@
                                                                     <color key="titleShadowColor" cocoaTouchSystemColor="darkTextColor"/>
                                                                 </state>
                                                                 <connections>
-                                                                    <action selector="performOperation:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Vm8-mU-nsl"/>
+                                                                    <action selector="perform:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Vm8-mU-nsl"/>
                                                                 </connections>
                                                             </button>
                                                             <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0iL-iw-Kl1">
@@ -156,7 +147,7 @@
                                                                     <color key="titleShadowColor" cocoaTouchSystemColor="darkTextColor"/>
                                                                 </state>
                                                                 <connections>
-                                                                    <action selector="performOperation:" destination="BYZ-38-t0r" eventType="touchUpInside" id="XwL-IY-zNX"/>
+                                                                    <action selector="perform:" destination="BYZ-38-t0r" eventType="touchUpInside" id="XwL-IY-zNX"/>
                                                                 </connections>
                                                             </button>
                                                             <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tLj-2k-Fqu">
@@ -168,7 +159,7 @@
                                                                     <color key="titleShadowColor" cocoaTouchSystemColor="darkTextColor"/>
                                                                 </state>
                                                                 <connections>
-                                                                    <action selector="performOperation:" destination="BYZ-38-t0r" eventType="touchUpInside" id="JDE-Vm-0je"/>
+                                                                    <action selector="perform:" destination="BYZ-38-t0r" eventType="touchUpInside" id="JDE-Vm-0je"/>
                                                                 </connections>
                                                             </button>
                                                             <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZfP-KA-oYk">
@@ -180,7 +171,7 @@
                                                                     <color key="titleShadowColor" cocoaTouchSystemColor="darkTextColor"/>
                                                                 </state>
                                                                 <connections>
-                                                                    <action selector="performOperation:" destination="BYZ-38-t0r" eventType="touchUpInside" id="8TF-Eu-swa"/>
+                                                                    <action selector="perform:" destination="BYZ-38-t0r" eventType="touchUpInside" id="8TF-Eu-swa"/>
                                                                 </connections>
                                                             </button>
                                                             <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yrx-sr-3wZ">
@@ -192,7 +183,7 @@
                                                                     <color key="titleShadowColor" cocoaTouchSystemColor="darkTextColor"/>
                                                                 </state>
                                                                 <connections>
-                                                                    <action selector="performOperation:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Wyd-lM-9cw"/>
+                                                                    <action selector="perform:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Wyd-lM-9cw"/>
                                                                 </connections>
                                                             </button>
                                                         </subviews>
@@ -209,7 +200,7 @@
                                                                     <color key="titleShadowColor" cocoaTouchSystemColor="darkTextColor"/>
                                                                 </state>
                                                                 <connections>
-                                                                    <action selector="performOperation:" destination="BYZ-38-t0r" eventType="touchUpInside" id="9xM-aw-aG3"/>
+                                                                    <action selector="perform:" destination="BYZ-38-t0r" eventType="touchUpInside" id="9xM-aw-aG3"/>
                                                                 </connections>
                                                             </button>
                                                             <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yos-DR-qo3">
@@ -254,7 +245,7 @@
                                                                     <color key="titleShadowColor" cocoaTouchSystemColor="darkTextColor"/>
                                                                 </state>
                                                                 <connections>
-                                                                    <action selector="performOperation:" destination="BYZ-38-t0r" eventType="touchUpInside" id="KUd-SC-xFh"/>
+                                                                    <action selector="perform:" destination="BYZ-38-t0r" eventType="touchUpInside" id="KUd-SC-xFh"/>
                                                                 </connections>
                                                             </button>
                                                         </subviews>
@@ -271,7 +262,7 @@
                                                                     <color key="titleShadowColor" cocoaTouchSystemColor="darkTextColor"/>
                                                                 </state>
                                                                 <connections>
-                                                                    <action selector="performOperation:" destination="BYZ-38-t0r" eventType="touchUpInside" id="YIe-Gn-zhi"/>
+                                                                    <action selector="perform:" destination="BYZ-38-t0r" eventType="touchUpInside" id="YIe-Gn-zhi"/>
                                                                 </connections>
                                                             </button>
                                                             <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lUp-jG-Dv0">
@@ -316,7 +307,7 @@
                                                                     <color key="titleShadowColor" cocoaTouchSystemColor="darkTextColor"/>
                                                                 </state>
                                                                 <connections>
-                                                                    <action selector="performOperation:" destination="BYZ-38-t0r" eventType="touchUpInside" id="nrN-Rp-mId"/>
+                                                                    <action selector="perform:" destination="BYZ-38-t0r" eventType="touchUpInside" id="nrN-Rp-mId"/>
                                                                 </connections>
                                                             </button>
                                                         </subviews>
@@ -333,7 +324,7 @@
                                                                     <color key="titleShadowColor" cocoaTouchSystemColor="darkTextColor"/>
                                                                 </state>
                                                                 <connections>
-                                                                    <action selector="performOperation:" destination="BYZ-38-t0r" eventType="touchUpInside" id="gMy-zU-dB4"/>
+                                                                    <action selector="perform:" destination="BYZ-38-t0r" eventType="touchUpInside" id="gMy-zU-dB4"/>
                                                                 </connections>
                                                             </button>
                                                             <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kAk-yd-up3">
@@ -395,7 +386,7 @@
                                                                     <color key="titleShadowColor" cocoaTouchSystemColor="darkTextColor"/>
                                                                 </state>
                                                                 <connections>
-                                                                    <action selector="performOperation:" destination="BYZ-38-t0r" eventType="touchUpInside" id="bEA-fj-ntR"/>
+                                                                    <action selector="perform:" destination="BYZ-38-t0r" eventType="touchUpInside" id="bEA-fj-ntR"/>
                                                                 </connections>
                                                             </button>
                                                             <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jTy-sB-5eI">
@@ -428,7 +419,7 @@
                                                                     <color key="titleShadowColor" cocoaTouchSystemColor="darkTextColor"/>
                                                                 </state>
                                                                 <connections>
-                                                                    <action selector="performOperation:" destination="BYZ-38-t0r" eventType="touchUpInside" id="4Io-o4-G5e"/>
+                                                                    <action selector="perform:" destination="BYZ-38-t0r" eventType="touchUpInside" id="4Io-o4-G5e"/>
                                                                 </connections>
                                                             </button>
                                                             <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VGN-XL-sUh">

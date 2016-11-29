@@ -9,7 +9,7 @@ class CalculatorViewController: UIViewController {
     @IBOutlet weak var descriptionLabel: UILabel!
     
     private var userInMiddleOfTyping = false
-    private var brain:CalculatorBrain!
+    private var brain:CalculatorBrain!  
     private let formatter:NumberFormatter = NumberFormatter()
     
     
@@ -23,8 +23,10 @@ class CalculatorViewController: UIViewController {
    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let destinationvc = segue.destination
-        if let graphvc = destinationvc as? GraphViewController{
-            graphvc.updateLabel("hahahaha")
+        if let graphvc = destinationvc as? GraphViewController,
+            let identifier = segue.identifier, identifier == ""{
+            
+//            graphvc.graphFunc =
         }
         
     }
@@ -60,7 +62,7 @@ class CalculatorViewController: UIViewController {
     }
     
     
-    @IBAction private func performOperation(_ sender: UIButton) {
+    @IBAction private func perform(_ sender: UIButton) {
         if userInMiddleOfTyping{
             if let numberOnScreen = displayValue{
                 brain.setOperand(numberOnScreen)
@@ -68,7 +70,7 @@ class CalculatorViewController: UIViewController {
             }
         }
         if let mathematicalSymbol = sender.currentTitle{
-            brain.performOperation(symbol: mathematicalSymbol)
+            brain.perform(operation: mathematicalSymbol)
         }
         if brain.isPartialResult{
             descriptionLabel.text = brain.description + "..."
@@ -83,7 +85,6 @@ class CalculatorViewController: UIViewController {
     
     @IBAction func SetVariable(_ sender: UIButton) {
         brain.variableValues["X"] = displayValue
-        brain.performPreviousOperations(from:brain.Program as! [AnyObject])
         displayValue = brain.result
         userInMiddleOfTyping = false
     }
@@ -94,12 +95,12 @@ class CalculatorViewController: UIViewController {
     }
     
     @IBAction func Save() {
-        savedProgram = brain.Program
+        savedProgram = brain.program
     }
 
     @IBAction func Restore() {
         if savedProgram != nil{
-            brain.Program = savedProgram!
+            brain.program = savedProgram!
             displayValue = brain.result
             
         }

@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+import UIKit
 
 class CalculatorBrain{
     
@@ -51,7 +51,11 @@ class CalculatorBrain{
         var firstOperand: Double
     }
     
-    var variableValues = [String:Double]()
+    var variableValues = [String:Double](){
+        didSet{
+            program = internalProgram as CalculatorBrain.PropertiesList
+        }
+    }
     
     var result: Double{
         get{
@@ -61,14 +65,25 @@ class CalculatorBrain{
     
     typealias PropertiesList = AnyObject
     
-    var Program: PropertiesList{
+    var program: PropertiesList{
         get{
             return internalProgram as CalculatorBrain.PropertiesList
         }
         set{
             clear()
-            if let savedProgram = newValue as? [AnyObject]{
-                internalProgram = savedProgram
+            if let arrayOfOps = newValue as? [AnyObject] {
+                for op in arrayOfOps {
+                    if let operand = op as? Double {
+                        setOperand(operand)
+                    } else if let symbol = op as? String {
+                        if operations[symbol] != nil {
+                            perform(operation: symbol)
+                        } else {
+                            setOperand(variable: symbol)
+                        }
+                        
+                    }
+                }
             }
         }
     }
@@ -80,25 +95,15 @@ class CalculatorBrain{
         self.formatter = formatter
     }
     
-    func performPreviousOperations(from operationsArray:[AnyObject]){
-        clear()
-        for op in operationsArray {
-            if let operand = op as? Double{
-                setOperand(operand)
-            } else if let operation = op as? String{
-                if variableValues[operation] != nil{
-                    setOperand(variable: operation)
-                }
-                performOperation(symbol: operation)
-            }
-        }
+    func eval(x: CGFloat) -> CGFloat{
+        return 0.0
     }
     
-
     func clear(){
         description = ""
         accumulator = 0.0
         pending = nil
+        internalProgram.removeAll(keepingCapacity: false)
     }
     
     func setOperand(_ operand:Double){
@@ -125,13 +130,11 @@ class CalculatorBrain{
     func Undo(){
         if internalProgram.count > 0{
             internalProgram.removeLast()
-            let temp = internalProgram
-            internalProgram = []
-            performPreviousOperations(from:temp)
+            program = internalProgram as CalculatorBrain.PropertiesList
         }
     }
     
-    func performOperation(symbol:String)  {
+    func perform(operation symbol:String)  {
         if let operation = operations[symbol]{
             internalProgram.append(symbol as AnyObject)
             switch operation{
