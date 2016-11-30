@@ -22,11 +22,13 @@ class CalculatorViewController: UIViewController {
     }
    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let destinationvc = segue.destination
-        if let graphvc = destinationvc as? GraphViewController,
-            let identifier = segue.identifier, identifier == ""{
-            
-//            graphvc.graphFunc =
+        let destinationvc = segue.destination.childViewControllers[0]
+        if let graphvc = destinationvc as? GraphViewController{
+            graphvc.navigationItem.title = brain.description
+            graphvc.graphFunc = {[weak weakSelf = self] x in
+                weakSelf?.brain.variableValues["X"] = x
+                return (weakSelf?.brain?.result)!
+            }
         }
         
     }

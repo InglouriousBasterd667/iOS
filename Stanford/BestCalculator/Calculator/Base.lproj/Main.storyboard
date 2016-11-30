@@ -19,28 +19,29 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <navigationItem key="navigationItem" id="b8g-HY-Cfg"/>
                     <connections>
-                        <outlet property="graphView" destination="atV-Ot-9PZ" id="3Sv-G9-iuk"/>
+                        <outlet property="graphView" destination="atV-Ot-9PZ" id="9WA-P9-ZXH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="E79-te-7uj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-23.199999999999999" y="169.56521739130437"/>
+            <point key="canvasLocation" x="916" y="169.56521739130437"/>
         </scene>
         <!--Split View Controller-->
         <scene sceneID="pyP-IO-Foq">
             <objects>
                 <splitViewController id="7CB-6J-et2" sceneMemberID="viewController">
                     <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="masterViewController" id="rFt-pT-jcl"/>
-                        <segue destination="yps-kd-jnZ" kind="showDetail" id="qxQ-hN-3mV"/>
+                        <segue destination="fxg-n6-vcb" kind="relationship" relationship="masterViewController" id="rFt-pT-jcl"/>
+                        <segue destination="DMc-R9-XeE" kind="relationship" relationship="detailViewController" id="Fcx-uy-AMg"/>
                     </connections>
                 </splitViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Exb-52-zce" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1953" y="805"/>
         </scene>
-        <!--Calculator View Controller-->
+        <!--Calculator-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="CalculatorViewController" customModule="Calculator" customModuleProvider="target" sceneMemberID="viewController">
@@ -52,10 +53,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="asj-Fj-SyY">
-                                <frame key="frameInset" minX="1" minY="111" width="375" height="445"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" axis="vertical" distribution="fillProportionally" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="asj-Fj-SyY">
+                                <frame key="frameInset" minX="1" minY="110" width="375" height="445"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="roi-JI-Hj6">
+                                    <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" distribution="fillProportionally" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="roi-JI-Hj6">
                                         <frame key="frameInset" width="375" height="415"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="0" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iSm-AL-uhF">
@@ -118,7 +119,7 @@
                                                                     <color key="titleShadowColor" cocoaTouchSystemColor="darkTextColor"/>
                                                                 </state>
                                                                 <connections>
-                                                                    <segue destination="yps-kd-jnZ" kind="showDetail" id="icW-p2-0ah"/>
+                                                                    <segue destination="DMc-R9-XeE" kind="showDetail" identifier="Show Graph" id="icW-p2-0ah"/>
                                                                 </connections>
                                                             </button>
                                                         </subviews>
@@ -480,9 +481,12 @@
                         </subviews>
                         <color key="backgroundColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
+                            <constraint firstItem="qP8-DY-wX1" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="115" id="1go-7e-MZO"/>
                             <constraint firstItem="asj-Fj-SyY" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="4HP-Ke-rat"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="roi-JI-Hj6" secondAttribute="bottom" constant="141" id="5dy-Fw-Poy"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" title="Calculator" id="qvn-8I-lXa"/>
                     <connections>
                         <outlet property="DescriptionLabel" destination="J2I-J7-5KN" id="V2T-DQ-LQY"/>
                         <outlet property="display" destination="iSm-AL-uhF" id="tVH-R3-vR5"/>
@@ -490,10 +494,46 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-759" y="1156"/>
+            <point key="canvasLocation" x="-24" y="1278"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="lJK-wj-qOW">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="fxg-n6-vcb" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="AvC-XU-7fl">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="o45-yj-w8U"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="VK5-O1-mGW" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-759.20000000000005" y="1155.472263868066"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="VLr-bj-CvB">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="DMc-R9-XeE" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="cDR-jt-DMM">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="yps-kd-jnZ" kind="relationship" relationship="rootViewController" id="yXL-az-WJC"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hHd-I1-8AD" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-23.199999999999999" y="169.56521739130437"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="qxQ-hN-3mV"/>
+        <segue reference="icW-p2-0ah"/>
     </inferredMetricsTieBreakers>
 </document>

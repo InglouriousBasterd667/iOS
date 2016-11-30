@@ -95,9 +95,6 @@ class CalculatorBrain{
         self.formatter = formatter
     }
     
-    func eval(x: CGFloat) -> CGFloat{
-        return 0.0
-    }
     
     func clear(){
         description = ""
