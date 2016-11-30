@@ -18,6 +18,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="vXr-y7-Kgn" appends="YES" id="mUB-sx-K9A"/>
+                        </connections>
                     </view>
                     <navigationItem key="navigationItem" id="b8g-HY-Cfg"/>
                     <connections>
@@ -25,6 +29,7 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="E79-te-7uj" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="vXr-y7-Kgn"/>
             </objects>
             <point key="canvasLocation" x="916" y="169.56521739130437"/>
         </scene>
@@ -490,6 +495,7 @@
                     <connections>
                         <outlet property="DescriptionLabel" destination="J2I-J7-5KN" id="V2T-DQ-LQY"/>
                         <outlet property="display" destination="iSm-AL-uhF" id="tVH-R3-vR5"/>
+                        <outlet property="graphButton" destination="zAT-3w-GWW" id="iaV-eq-6uQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

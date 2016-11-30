@@ -87,44 +87,36 @@ class GraphView: UIView {
         var normal: Bool
     }
     
+    func scale(gesture: UIPinchGestureRecognizer){
+        switch gesture.state{
+        case .changed,.ended:
+            scale *= gesture.scale
+            gesture.scale = 1.0
+        default:
+            break
+        }
+    }
     
-//    func drawFuncInRect(_ bounds: CGRect, origin: CGPoint, scale: CGFloat){
-//        color.set()
-//        var xGraph, yGraph :CGFloat
-//        
-//        var x: Double {return Double ((xGraph - origin.x) / scale)}
-//        
-//        // ---Разрывные точки----
-//        var oldPoint = OldPoint (yGraph: 0.0, normal: false)
-//        var disContinuity:Bool {
-//            return abs( yGraph - oldPoint.yGraph) >
-//                max(bounds.width, bounds.height) * 1.5}
-//        //-----------------------
-//        let path = UIBezierPath()
-//        path.lineWidth = lineWidth
-//        
-//        for i in 0...Int(bounds.size.width * contentScaleFactor){
-//            
-//            xGraph = CGFloat(i) / contentScaleFactor
-//            
-//            guard let y = (funcToDraw)?(x), y.isFinite
-//                else { oldPoint.normal = false;  continue}
-//            yGraph = origin.y - CGFloat(y) * scale
-//            
-//            if !oldPoint.normal{
-//                path.move(to: CGPoint(x: xGraph, y: yGraph))
-//            } else {
-//                guard !disContinuity else {
-//                    oldPoint =  OldPoint ( yGraph: yGraph, normal: false)
-//                    continue }
-//                path.addLine(to: CGPoint(x: xGraph, y: yGraph))
-//            }
-//            oldPoint =  OldPoint (yGraph: yGraph, normal: true)
-//        }
-//        path.stroke()
-//    }
-    
+    func moveOrigin(gesture: UITapGestureRecognizer){
+        if gesture.state == .ended{
+            origin = gesture.location(in: self)
+        }
+    }
 
+    func panningGraph(gesture: UIPanGestureRecognizer){
+        switch gesture.state{
+        case .ended:fallthrough
+        case .changed:
+            let translation = gesture.translation(in: self)
+            if translation != CGPoint.zero{
+                origin.x += translation.x
+                origin.y += translation.y
+                gesture.setTranslation(CGPoint.zero, in: self)
+            }
+        default: break
+        }
+    }
+    
     /*
     // Only override draw() if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.

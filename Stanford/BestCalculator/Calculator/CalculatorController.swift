@@ -7,6 +7,7 @@ class CalculatorViewController: UIViewController {
     
     @IBOutlet private weak var display: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
+    @IBOutlet weak var graphButton: UIButton!
     
     private var userInMiddleOfTyping = false
     private var brain:CalculatorBrain!  
@@ -18,7 +19,7 @@ class CalculatorViewController: UIViewController {
         formatter.numberStyle = NumberFormatter.Style.decimal
         formatter.maximumFractionDigits = 3
         self.brain = CalculatorBrain(formatter)
-        self.brain.variableValues = ["x":1, "y":2]
+        graphButton.isEnabled = false
     }
    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -74,13 +75,9 @@ class CalculatorViewController: UIViewController {
         if let mathematicalSymbol = sender.currentTitle{
             brain.perform(operation: mathematicalSymbol)
         }
-        if brain.isPartialResult{
-            descriptionLabel.text = brain.description + "..."
-        }
-        else{
-            descriptionLabel.text = brain.description + "="
-        }
+        descriptionLabel.text = brain.description + (brain.isPartialResult ? "..." : "=")
         displayValue = brain.result
+        graphButton.isEnabled = !brain.isPartialResult
     }
     
     var savedProgram: CalculatorBrain.PropertiesList?
@@ -116,12 +113,13 @@ class CalculatorViewController: UIViewController {
             brain.Undo()
             if brain.isPartialResult{
                 descriptionLabel.text = brain.description + "..."
+                
             }
             else{
                 descriptionLabel.text = brain.description + "="
                 brain.isPartialResult = true
             }
-            
+            displayValue = brain.result
         }
     }
     
@@ -145,6 +143,7 @@ class CalculatorViewController: UIViewController {
         userInMiddleOfTyping = false
         display.text = "0"
         descriptionLabel.text = ""
+        graphButton.isEnabled = false
     }
 }
 
