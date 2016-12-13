@@ -9,11 +9,23 @@
 import UIKit
 import Twitter
 
-class TweetTableTableViewController: UITableViewController {
+class TweetTableTableViewController: UITableViewController, UISearchBarDelegate {
 
     
     private struct Storyboard{
         static let TweetCellIdentifier = "Tweet"
+        static let ShowDetailTweetIdentifier = "Show Tweet"
+    }
+    
+    @IBOutlet weak var searchField: UISearchBar!{
+        didSet{
+            searchField.delegate = self
+            searchField.text = searchText
+        }
+    }
+
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        self.searchText = searchText
     }
     
     var tweets = [Array<Twitter.Tweet>](){
@@ -45,7 +57,6 @@ class TweetTableTableViewController: UITableViewController {
             request.fetchTweets(){[weak weakSelf = self] (newTweets) in
                 DispatchQueue.main.async(){
                     if !newTweets.isEmpty && request == weakSelf?.lastTwitRequest{
-                        
                         weakSelf?.tweets.insert(newTweets, at: 0)
                     }
                 }
@@ -53,9 +64,11 @@ class TweetTableTableViewController: UITableViewController {
         }
     }
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        searchText = "#stanford"
+        tableView.estimatedRowHeight = tableView.rowHeight
+        tableView.rowHeight = UITableViewAutomaticDimension
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -69,31 +82,42 @@ class TweetTableTableViewController: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
 
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let destinationVC = segue.destination
+        if let cell = sender as? TweetTableViewCell{
+            if let tweetDetailVC = destinationVC as? TweetDetailTableViewController{
+                if segue.identifier == Storyboard.ShowDetailTweetIdentifier{
+                    tweetDetailVC.getDataFromSegue((cell.tweet)!)
+                }
+            }
+        }
+    }
+    
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return tweets.count
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         return tweets[section].count
     }
+    
 
-    
-    
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Storyboard.TweetCellIdentifier, for: indexPath)
 
         let tweet = tweets[indexPath.section][indexPath.row]
-        cell.textLabel?.text = tweet.text
-        cell.detailTextLabel?.text = tweet.user.name
+        if let tweetCell = cell as? TweetTableViewCell{
+            tweetCell.tweet = tweet
+        }
         
         return cell
     }
 
+    
+
+    
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
