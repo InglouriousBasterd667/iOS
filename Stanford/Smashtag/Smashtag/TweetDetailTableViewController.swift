@@ -29,6 +29,9 @@ class TweetDetailTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        tableView.estimatedRowHeight = tableView.rowHeight
+        tableView.rowHeight = UITableViewAutomaticDimension
+        
         title = tweet.user.name
         
         mentions["Images"] = tweet.media
@@ -64,14 +67,18 @@ class TweetDetailTableViewController: UITableViewController {
         var cell = UITableViewCell()
         let sectionName = mentionsSections[indexPath.section]
         let mentionsBySection = mentions[sectionName]
+        let mention = mentionsBySection?[indexPath.row]
         if mentionsBySection is [Mention]{
             cell = tableView.dequeueReusableCell(withIdentifier: Storyboard.mentionIdentifier, for: indexPath)
-            let mention = mentionsBySection?[indexPath.row]
+
             cell.textLabel?.text = mention?.keyword
         }
         else if mentionsBySection is [MediaItem]{
             cell = tableView.dequeueReusableCell(withIdentifier: Storyboard.imageIdentifier, for: indexPath)
-            cell.textLabel?.text = "Hello motherfucker!"
+            if let imageCell = cell as? ImageTableViewCell{
+                let media = mention as! MediaItem
+                imageCell.imageURL = media.url
+            }
         }
         else{
             cell.textLabel?.text = "There are no items"

@@ -17,6 +17,7 @@ class TweetTableViewCell: UITableViewCell {
     @IBOutlet weak var tweetDate: UILabel!
     
     @IBOutlet weak var tweetProfileImage: UIImageView!
+    
     private let urlColor: UIColor = #colorLiteral(red: 0, green: 0.4784313725, blue: 1, alpha: 1)
     private let userColor: UIColor = #colorLiteral(red: 0.9372549057, green: 0.3490196168, blue: 0.1921568662, alpha: 1)
     private let hashtagColor: UIColor = #colorLiteral(red: 0, green: 0.9914394021, blue: 1, alpha: 1)

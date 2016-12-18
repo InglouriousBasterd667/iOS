@@ -9,7 +9,7 @@
 import UIKit
 import Twitter
 
-class TweetTableTableViewController: UITableViewController, UISearchBarDelegate {
+class TweetTableViewController: UITableViewController, UISearchBarDelegate {
 
     
     private struct Storyboard{
@@ -26,6 +26,10 @@ class TweetTableTableViewController: UITableViewController, UISearchBarDelegate 
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         self.searchText = searchText
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
     }
     
     var tweets = [Array<Twitter.Tweet>](){
