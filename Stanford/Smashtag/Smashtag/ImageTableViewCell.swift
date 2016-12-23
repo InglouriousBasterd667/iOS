@@ -59,8 +59,9 @@ class ImageTableViewCell: UITableViewCell {
                         if let imageData = contentsOfURL {
                             self.media = UIImage(data: imageData)
                         } else {
-                            self.spinner?.stopAnimating()
+                            self.media = nil
                         }
+                        self.spinner.stopAnimating()
                     } else {
                         // just so you can see in the console when this happens
                         print("ignored data returned from url \(url)")

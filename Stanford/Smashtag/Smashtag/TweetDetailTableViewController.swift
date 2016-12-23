@@ -13,13 +13,19 @@ class TweetDetailTableViewController: UITableViewController {
 
     
     
-    private var tweet: Tweet!
+    private var tweet: Tweet!{
+        didSet{
+            
+        }
+    }
     private var mentions = [String:[AnyObject]]()
     private var mentionsSections: [String] = []
     
     private struct Storyboard{
         static let mentionIdentifier = "Mention"
         static let imageIdentifier = "Image"
+        static let segueSearchIdentifier = "Search mention"
+        static let segueImageIdentifier = "Show image"
     }
     
     func getDataFromSegue(_ tweet: Tweet){
@@ -29,8 +35,8 @@ class TweetDetailTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.estimatedRowHeight = tableView.rowHeight
         tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 140
         
         title = tweet.user.name
         
@@ -42,9 +48,52 @@ class TweetDetailTableViewController: UITableViewController {
         mentionsSections = Array(mentions.keys).sorted()
         
     }
-
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let identifier = segue.identifier{
+            if identifier == Storyboard.segueSearchIdentifier{
+                if let destVc = segue.destination as? TweetTableViewController{
+                    if let cell = sender as? UITableViewCell{
+                        destVc.searchText = cell.textLabel?.text
+                    }
+                }
+            }
+            else if identifier == Storyboard.segueImageIdentifier{
+                if let destVc = segue.destination as? ImageViewController{
+                    if let cell = sender as? ImageTableViewCell{
+                        destVc.imageURL = cell.imageURL
+                    }
+                }
+            }
+        }
+    }
+    
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+        if identifier == Storyboard.segueSearchIdentifier{
+            if let cell = sender as? UITableViewCell{
+                if let txt = cell.textLabel?.text{
+                    if let url = URL(string: txt), txt.hasPrefix("http"){
+                        UIApplication.shared.open(url)
+                        return false
+                    }
+                }
+            }
+        }
+        return true
+    }
     // MARK: - Table view data source
-
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        let sectionName = mentionsSections[indexPath.section]
+        let mentionsBySection = mentions[sectionName]
+        let mention = mentionsBySection?[indexPath.row]
+        if mentionsBySection is [MediaItem]{
+            let media = mention as! MediaItem
+            return tableView.bounds.size.width / CGFloat(media.aspectRatio)
+        }
+        return UITableViewAutomaticDimension
+    }
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         return mentionsSections.count
     }
@@ -64,26 +113,21 @@ class TweetDetailTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var cell = UITableViewCell()
         let sectionName = mentionsSections[indexPath.section]
         let mentionsBySection = mentions[sectionName]
         let mention = mentionsBySection?[indexPath.row]
         if mentionsBySection is [Mention]{
-            cell = tableView.dequeueReusableCell(withIdentifier: Storyboard.mentionIdentifier, for: indexPath)
-
+            let cell = tableView.dequeueReusableCell(withIdentifier: Storyboard.mentionIdentifier, for: indexPath)
             cell.textLabel?.text = mention?.keyword
+            return cell
         }
-        else if mentionsBySection is [MediaItem]{
-            cell = tableView.dequeueReusableCell(withIdentifier: Storyboard.imageIdentifier, for: indexPath)
-            if let imageCell = cell as? ImageTableViewCell{
-                let media = mention as! MediaItem
-                imageCell.imageURL = media.url
-            }
+       else if mentionsBySection is [MediaItem]{
+            let cell = tableView.dequeueReusableCell(withIdentifier: Storyboard.imageIdentifier, for: indexPath) as! ImageTableViewCell
+            let media = mention as! MediaItem
+            cell.imageURL = media.url
+            return cell
         }
-        else{
-            cell.textLabel?.text = "There are no items"
-        }
-        return cell
+        return UITableViewCell()
     }
 
     /*
