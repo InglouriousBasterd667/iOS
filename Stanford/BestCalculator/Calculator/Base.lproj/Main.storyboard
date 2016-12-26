@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -73,9 +74,12 @@
                                 <state key="normal" title="graph">
                                     <color key="titleShadowColor" cocoaTouchSystemColor="darkTextColor"/>
                                 </state>
+                                <connections>
+                                    <segue destination="DMc-R9-XeE" kind="show" id="KmF-lb-N9H"/>
+                                </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="QgF-In-YnA">
-                                <rect key="frame" x="0.5" y="159.5" width="375" height="347"/>
+                                <rect key="frame" x="0.0" y="159.5" width="375" height="347"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="0YB-Zp-CWK">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="41"/>
@@ -948,19 +952,23 @@
                             <constraint firstAttribute="trailingMargin" secondItem="yFt-0w-uCv" secondAttribute="trailing" constant="-5" id="LMW-aw-t7a"/>
                             <constraint firstItem="qSU-Mv-tbA" firstAttribute="leading" secondItem="rpf-xX-YB8" secondAttribute="trailing" constant="8" symbolic="YES" id="OtE-Pf-fbc"/>
                             <constraint firstItem="8p9-GX-MDC" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="PM5-51-fmg"/>
+                            <constraint firstItem="zj2-Bz-Xbg" firstAttribute="width" secondItem="MYH-5h-2aJ" secondAttribute="width" id="Ps4-ID-Zy5"/>
                             <constraint firstItem="jnP-nS-Te6" firstAttribute="height" secondItem="yFt-0w-uCv" secondAttribute="height" id="RSX-21-pbL"/>
                             <constraint firstItem="Kcf-55-o8k" firstAttribute="leading" secondItem="8p9-GX-MDC" secondAttribute="leading" id="WFA-90-Jcy"/>
+                            <constraint firstItem="a2z-uh-UDU" firstAttribute="width" secondItem="MYH-5h-2aJ" secondAttribute="width" id="Waz-pc-7Lx"/>
                             <constraint firstItem="rpf-xX-YB8" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="213" id="alS-Ow-VkK"/>
                             <constraint firstItem="Kcf-55-o8k" firstAttribute="centerX" secondItem="QgF-In-YnA" secondAttribute="centerX" id="bS2-y8-Yuv"/>
                             <constraint firstItem="rpf-xX-YB8" firstAttribute="top" secondItem="yFt-0w-uCv" secondAttribute="top" id="dkR-lt-dyW"/>
                             <constraint firstItem="rpf-xX-YB8" firstAttribute="top" secondItem="qSU-Mv-tbA" secondAttribute="top" id="e90-LZ-ix8"/>
                             <constraint firstItem="jnP-nS-Te6" firstAttribute="width" secondItem="Rqc-Ab-96I" secondAttribute="width" id="eMf-w9-TaF"/>
+                            <constraint firstItem="cLx-xk-z9B" firstAttribute="width" secondItem="MYH-5h-2aJ" secondAttribute="width" id="gkB-2p-evs"/>
                             <constraint firstItem="8p9-GX-MDC" firstAttribute="bottom" secondItem="g90-qM-CUh" secondAttribute="bottom" id="ih2-3D-io4"/>
                             <constraint firstItem="yFt-0w-uCv" firstAttribute="leading" secondItem="jnP-nS-Te6" secondAttribute="trailing" constant="8" symbolic="YES" id="kBS-8l-V5i"/>
                             <constraint firstItem="Kcf-55-o8k" firstAttribute="trailing" secondItem="g90-qM-CUh" secondAttribute="trailing" id="kfy-7m-g0e"/>
                             <constraint firstItem="qSU-Mv-tbA" firstAttribute="height" secondItem="yFt-0w-uCv" secondAttribute="height" id="l0W-US-cbb"/>
                             <constraint firstItem="g90-qM-CUh" firstAttribute="leading" secondItem="8p9-GX-MDC" secondAttribute="trailing" constant="8" symbolic="YES" id="lzx-qK-tQI"/>
                             <constraint firstAttribute="trailing" secondItem="Kcf-55-o8k" secondAttribute="trailing" id="mba-RY-yvf"/>
+                            <constraint firstItem="wbu-ed-wwz" firstAttribute="width" secondItem="MYH-5h-2aJ" secondAttribute="width" id="sft-VE-uxr"/>
                             <constraint firstItem="QgF-In-YnA" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="wd0-lS-bNu"/>
                             <constraint firstItem="rpf-xX-YB8" firstAttribute="top" secondItem="jnP-nS-Te6" secondAttribute="top" id="z0S-OZ-cLu"/>
                         </constraints>
@@ -972,6 +980,12 @@
                                 <exclude reference="rpf-xX-YB8"/>
                                 <exclude reference="qSU-Mv-tbA"/>
                                 <exclude reference="kew-WI-InZ"/>
+                            </mask>
+                            <mask key="constraints">
+                                <exclude reference="Waz-pc-7Lx"/>
+                                <exclude reference="gkB-2p-evs"/>
+                                <exclude reference="sft-VE-uxr"/>
+                                <exclude reference="Ps4-ID-Zy5"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=compact">
@@ -991,6 +1005,12 @@
                                 <include reference="yFt-0w-uCv"/>
                                 <exclude reference="kew-WI-InZ"/>
                             </mask>
+                            <mask key="constraints">
+                                <include reference="Waz-pc-7Lx"/>
+                                <include reference="gkB-2p-evs"/>
+                                <include reference="sft-VE-uxr"/>
+                                <include reference="Ps4-ID-Zy5"/>
+                            </mask>
                         </variation>
                     </view>
                     <navigationItem key="navigationItem" title="Calculator" id="qvn-8I-lXa"/>
@@ -1002,7 +1022,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-25.637181409295355" y="1277.5999999999999"/>
+            <point key="canvasLocation" x="506" y="1155"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="lJK-wj-qOW">
@@ -1041,4 +1061,7 @@
             <point key="canvasLocation" x="-23.199999999999999" y="169.56521739130437"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="KmF-lb-N9H"/>
+    </inferredMetricsTieBreakers>
 </document>

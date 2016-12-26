@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		22250DEE1E11242E00DE82E1 /* clock-7.png in Resources */ = {isa = PBXBuildFile; fileRef = 22250DED1E11242E00DE82E1 /* clock-7.png */; };
+		22250DF01E11244800DE82E1 /* search-7.png in Resources */ = {isa = PBXBuildFile; fileRef = 22250DEF1E11244800DE82E1 /* search-7.png */; };
 		2248AEAC1E0D3D77006B5E12 /* ImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2248AEAB1E0D3D77006B5E12 /* ImageViewController.swift */; };
 		225089941DFED93100CC4986 /* TweetDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 225089931DFED93100CC4986 /* TweetDetailTableViewController.swift */; };
 		22757D101DF5E356003CB9DB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22757D0F1DF5E356003CB9DB /* AppDelegate.swift */; };
@@ -35,6 +37,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		22250DED1E11242E00DE82E1 /* clock-7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "clock-7.png"; sourceTree = "<group>"; };
+		22250DEF1E11244800DE82E1 /* search-7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "search-7.png"; sourceTree = "<group>"; };
 		2248AEAB1E0D3D77006B5E12 /* ImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageViewController.swift; sourceTree = "<group>"; };
 		225089931DFED93100CC4986 /* TweetDetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweetDetailTableViewController.swift; sourceTree = "<group>"; };
 		22561B391DF5EB06008B2C84 /* Twitter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Twitter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -103,6 +107,8 @@
 				22757D161DF5E356003CB9DB /* Assets.xcassets */,
 				22757D181DF5E356003CB9DB /* LaunchScreen.storyboard */,
 				22757D1B1DF5E356003CB9DB /* Info.plist */,
+				22250DED1E11242E00DE82E1 /* clock-7.png */,
+				22250DEF1E11244800DE82E1 /* search-7.png */,
 			);
 			name = support;
 			sourceTree = "<group>";
@@ -169,8 +175,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				22757D1A1DF5E356003CB9DB /* LaunchScreen.storyboard in Resources */,
+				22250DF01E11244800DE82E1 /* search-7.png in Resources */,
 				22757D171DF5E356003CB9DB /* Assets.xcassets in Resources */,
 				22757D151DF5E356003CB9DB /* Main.storyboard in Resources */,
+				22250DEE1E11242E00DE82E1 /* clock-7.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
