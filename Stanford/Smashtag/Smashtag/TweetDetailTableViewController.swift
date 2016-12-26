@@ -62,6 +62,8 @@ class TweetDetailTableViewController: UITableViewController {
                 if let destVc = segue.destination as? ImageViewController{
                     if let cell = sender as? ImageTableViewCell{
                         destVc.imageURL = cell.imageURL
+//                        destVc.image = cell.imageView?.image
+                        destVc.title = title
                     }
                 }
             }

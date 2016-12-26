@@ -62,6 +62,19 @@ class ImageViewController: UIViewController, UIScrollViewDelegate
         }
     }
     
+    private var scrollViewDidScrollOrZoom = false
+    
+    private func autoScale(){
+        if !scrollViewDidScrollOrZoom{
+            if let im = image{
+                scrollView.zoomScale = max(scrollView.bounds.height / im.size.height,
+                                        scrollView.bounds.width / im.size.width)
+                scrollView.contentOffset = CGPoint(x: (imageView.frame.size.width - scrollView.frame.width) / 2,
+                                               y: (imageView.frame.size.height - scrollView.frame.height) / 2)
+            }
+        }
+    }
+    
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     
     @IBOutlet weak var scrollView: UIScrollView! {
@@ -89,7 +102,7 @@ class ImageViewController: UIViewController, UIScrollViewDelegate
     // whenever we change the image we're displaying
     // it's purely to make our code look prettier elsewhere in this class
     
-    fileprivate var image: UIImage? {
+    var image: UIImage? {
         get {
             return imageView.image
         }
@@ -98,6 +111,8 @@ class ImageViewController: UIViewController, UIScrollViewDelegate
             imageView.sizeToFit()
             scrollView?.contentSize = imageView.frame.size
             spinner?.stopAnimating()
+            scrollViewDidScrollOrZoom = false
+            autoScale()
         }
     }
     
@@ -105,7 +120,7 @@ class ImageViewController: UIViewController, UIScrollViewDelegate
     
     // we know we're going to go on screen in this method
     // so we can no longer wait to fire off our (expensive) image fetch
-    
+   
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if image == nil {
@@ -122,4 +137,19 @@ class ImageViewController: UIViewController, UIScrollViewDelegate
         super.viewDidLoad()
         scrollView.addSubview(imageView)
     }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        autoScale()
+    }
+    
+    func scrollViewDidEndZooming(_ scrollView: UIScrollView, with view: UIView?, atScale scale: CGFloat) {
+        scrollViewDidScrollOrZoom = true
+    }
+    
+    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+        scrollViewDidScrollOrZoom = true
+    }
+    
+    
 }
