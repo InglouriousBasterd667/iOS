@@ -1,81 +1,22 @@
 //
-//  TweetTableTableViewController.swift
+//  RecentSearchesTableViewController.swift
 //  Smashtag
 //
-//  Created by Mikhail Lyapich on 05.12.16.
+//  Created by Mikhail Lyapich on 27.12.16.
 //  Copyright © 2016 Mikhail Lyapich. All rights reserved.
 //
 
 import UIKit
-import Twitter
 
-class TweetTableViewController: UITableViewController, UISearchBarDelegate {
+class RecentSearchesTableViewController: UITableViewController {
 
-    
     private struct Storyboard{
-        static let TweetCellIdentifier = "Tweet"
-        static let ShowDetailTweetIdentifier = "Show Tweet"
+        static let cellIdentifier = "Recent Search"
+        static let segueIdentifier = "Search"
     }
-    
-    @IBOutlet weak var searchField: UISearchBar!{
-        didSet{
-            searchField.delegate = self
-            searchField.text = searchText
-        }
-    }
-
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        self.searchText = searchText
-    }
-    
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        if let st = self.searchText{
-            RecentSearches().add(search: st)
-        }
-        searchBar.resignFirstResponder()
-    }
-    
-    var tweets = [Array<Twitter.Tweet>](){
-        didSet{
-            tableView.reloadData()
-        }
-    }
-    var searchText: String?{
-        didSet{
-            tweets.removeAll()
-            title = searchText
-            searchForTweets()
-        }
-    }
-    
-    private var twitterRequest: Twitter.Request?{
-        if let query = searchText, !query.isEmpty{
-            return Twitter.Request(search:query,count:100)
-        }
-        return nil
-    }
-    
-    private var lastTwitRequest: Twitter.Request?
-    
-    private func searchForTweets(){
-        if let request = twitterRequest{
-            lastTwitRequest = request
-
-            request.fetchTweets(){[weak weakSelf = self] (newTweets) in
-                DispatchQueue.main.async(){
-                    if !newTweets.isEmpty && request == weakSelf?.lastTwitRequest{
-                        weakSelf?.tweets.insert(newTweets, at: 0)
-                    }
-                }
-            }
-        }
-    }
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.estimatedRowHeight = tableView.rowHeight
-        tableView.rowHeight = UITableViewAutomaticDimension
+
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -84,47 +25,44 @@ class TweetTableViewController: UITableViewController, UISearchBarDelegate {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.reloadData()
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
 
+    // MARK: - Table view data source
+
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        // #warning Incomplete implementation, return the number of sections
+        return 1
+    }
+
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        // #warning Incomplete implementation, return the number of rows
+        return RecentSearches().values.count
+    }
+
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: Storyboard.cellIdentifier, for: indexPath)
+        cell.textLabel?.text = RecentSearches().values[indexPath.row]
+        return cell
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let destinationVC = segue.destination
-        if let cell = sender as? TweetTableViewCell{
-            if let tweetDetailVC = destinationVC as? TweetDetailTableViewController{
-                if segue.identifier == Storyboard.ShowDetailTweetIdentifier{
-                    tweetDetailVC.getDataFromSegue((cell.tweet)!)
+        if segue.identifier == Storyboard.segueIdentifier{
+            if let destVc = segue.destination as? TweetTableViewController{
+                if let cell = sender as? UITableViewCell{
+                    destVc.searchText = cell.textLabel?.text
                 }
             }
         }
     }
-    
-    // MARK: - Table view data source
 
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        return tweets.count
-    }
-
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return tweets[section].count
-    }
-    
-
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: Storyboard.TweetCellIdentifier, for: indexPath)
-
-        let tweet = tweets[indexPath.section][indexPath.row]
-        if let tweetCell = cell as? TweetTableViewCell{
-            tweetCell.tweet = tweet
-        }
-        
-        return cell
-    }
-
-    
-
-    
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {

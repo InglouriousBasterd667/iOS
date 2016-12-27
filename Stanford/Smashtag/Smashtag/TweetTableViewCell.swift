@@ -30,9 +30,11 @@ class TweetTableViewCell: UITableViewCell {
     
     private func getAttributedTextFromTweet(_ tweet: Tweet) -> NSMutableAttributedString{
         var attributedString = NSMutableAttributedString(string: tweet.text)
+        attributedString.beginEditing()
         addColorToMentions(tweet.urls, attributedString: &attributedString, color: urlColor)
         addColorToMentions(tweet.hashtags, attributedString: &attributedString, color: hashtagColor)
         addColorToMentions(tweet.userMentions, attributedString: &attributedString, color: userColor)
+        attributedString.endEditing()
         return attributedString
     }
     
