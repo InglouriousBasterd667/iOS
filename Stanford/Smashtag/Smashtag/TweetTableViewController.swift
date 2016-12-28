@@ -10,12 +10,16 @@ import UIKit
 import Twitter
 
 class TweetTableViewController: UITableViewController, UISearchBarDelegate {
-
     
     private struct Storyboard{
         static let TweetCellIdentifier = "Tweet"
         static let ShowDetailTweetIdentifier = "Show Tweet"
     }
+    
+    @IBAction func unwindToRoot(_ sender: UIStoryboardSegue) {
+        
+    }
+
     
     @IBOutlet weak var searchField: UISearchBar!{
         didSet{
@@ -49,7 +53,10 @@ class TweetTableViewController: UITableViewController, UISearchBarDelegate {
     }
     
     private var twitterRequest: Twitter.Request?{
-        if let query = searchText, !query.isEmpty{
+        if var query = searchText, !query.isEmpty{
+            if query.hasPrefix("@"){
+                query = "\(query) OR from:\(query)"
+            }
             return Twitter.Request(search:query,count:100)
         }
         return nil
@@ -77,11 +84,11 @@ class TweetTableViewController: UITableViewController, UISearchBarDelegate {
         tableView.estimatedRowHeight = tableView.rowHeight
         tableView.rowHeight = UITableViewAutomaticDimension
         
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        if let first = navigationController?.viewControllers.first as? TweetTableViewController {
+            if first == self {
+                navigationItem.rightBarButtonItem = nil
+            }
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -98,6 +105,15 @@ class TweetTableViewController: UITableViewController, UISearchBarDelegate {
                 }
             }
         }
+    }
+    
+    override func canPerformUnwindSegueAction(_ action: Selector, from fromViewController: UIViewController, withSender sender: Any) -> Bool {
+        if let first = navigationController?.viewControllers.first as? TweetTableViewController {
+            if first == self {
+                return true
+            }
+        }
+        return false
     }
     
     // MARK: - Table view data source

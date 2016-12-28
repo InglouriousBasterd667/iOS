@@ -45,9 +45,21 @@
                             <outlet property="delegate" destination="9xc-9Q-weg" id="3yR-o5-xLV"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="xQa-wP-FeO"/>
+                    <navigationItem key="navigationItem" id="xQa-wP-FeO">
+                        <barButtonItem key="rightBarButtonItem" style="plain" id="5ob-cH-cSB">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="u2K-tI-HAV">
+                                <rect key="frame" x="276" y="7" width="83" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Back"/>
+                            </button>
+                            <connections>
+                                <segue destination="fr7-Ff-lb1" kind="unwind" unwindAction="unwindToRoot:" id="HdU-Zv-hK0"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jbC-Zg-FLN" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="fr7-Ff-lb1" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="250" y="1606"/>
         </scene>
@@ -101,13 +113,13 @@
                                                     <rect key="frame" x="70" y="0.0" width="289" height="169"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="301" text="Tweeter" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3fi-a4-uxU">
-                                                            <rect key="frame" x="0.0" y="0.0" width="289" height="20"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="289" height="19.5"/>
                                                             <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="16"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tweeter text" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="47e-8i-x5N">
-                                                            <rect key="frame" x="0.0" y="20" width="289" height="149"/>
+                                                            <rect key="frame" x="0.0" y="19.5" width="289" height="149.5"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -138,18 +150,28 @@
                             <outlet property="delegate" destination="dCc-99-fWY" id="WSW-rq-MOG"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="gwA-3W-hKo">
-                        <nil key="title"/>
+                    <navigationItem key="navigationItem" id="Q68-yf-bod">
+                        <barButtonItem key="rightBarButtonItem" style="plain" id="eOp-Vw-Crj">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="jWN-rB-vP8">
+                                <rect key="frame" x="276" y="7" width="83" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Back"/>
+                                <connections>
+                                    <segue destination="Ikv-fU-vZT" kind="unwind" unwindAction="unwindToRoot:" id="HGB-2y-LxF"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="searchField" destination="Ks9-e4-Fxq" id="Ph5-zv-KFG"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VmM-PR-h3X" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="Ikv-fU-vZT" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="1111" y="906"/>
         </scene>
-        <!--Tweet Detail Table View Controller-->
+        <!--Smaghtag-->
         <scene sceneID="FNd-D2-P1O">
             <objects>
                 <tableViewController id="chr-x7-5a6" customClass="TweetDetailTableViewController" customModule="Smashtag" customModuleProvider="target" sceneMemberID="viewController">
@@ -158,28 +180,8 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Mention" textLabel="nJV-R7-6pY" style="IBUITableViewCellStyleDefault" id="aJ2-hu-aW0">
-                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="aJ2-hu-aW0" id="6bp-gW-dV1">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                    <subviews>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="nJV-R7-6pY">
-                                            <rect key="frame" x="15" y="0.0" width="345" height="43.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                </tableViewCellContentView>
-                                <connections>
-                                    <segue destination="dCc-99-fWY" kind="show" identifier="Search mention" id="hlq-VB-bsO"/>
-                                </connections>
-                            </tableViewCell>
                             <tableViewCell clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="Image" rowHeight="200" id="Gle-U6-Dmb" customClass="ImageTableViewCell" customModule="Smashtag" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="72" width="375" height="200"/>
+                                <rect key="frame" x="0.0" y="28" width="375" height="200"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Gle-U6-Dmb" id="jMg-VF-S4v">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="199.5"/>
@@ -207,6 +209,26 @@
                                     <segue destination="k9r-Lp-uG3" kind="show" identifier="Show image" id="ah5-18-WNR"/>
                                 </connections>
                             </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Mention" textLabel="nJV-R7-6pY" style="IBUITableViewCellStyleDefault" id="aJ2-hu-aW0">
+                                <rect key="frame" x="0.0" y="228" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="aJ2-hu-aW0" id="6bp-gW-dV1">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="nJV-R7-6pY">
+                                            <rect key="frame" x="15" y="0.0" width="345" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="dCc-99-fWY" kind="show" identifier="Search mention" id="hlq-VB-bsO"/>
+                                </connections>
+                            </tableViewCell>
                         </prototypes>
                         <sections/>
                         <connections>
@@ -214,8 +236,18 @@
                             <outlet property="delegate" destination="chr-x7-5a6" id="8ZC-5e-hHq"/>
                         </connections>
                     </tableView>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" title="Smaghtag" id="mbK-cE-mKK">
+                        <barButtonItem key="rightBarButtonItem" title="Back" id="WYf-Hb-sMv">
+                            <connections>
+                                <segue destination="q16-Dp-Gbw" kind="unwind" unwindAction="unwindToRoot:" id="mfZ-m1-fTC"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SUy-db-Ka7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="q16-Dp-Gbw" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="1961" y="116"/>
         </scene>
@@ -232,7 +264,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="js1-v4-vvW">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="672"/>
                             </scrollView>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="QvP-Oa-Sp7">
                                 <rect key="frame" x="177" y="323" width="20" height="20"/>
@@ -293,7 +325,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2VO-kH-jwO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-962.39999999999998" y="115.59220389805098"/>
+            <point key="canvasLocation" x="-962" y="116"/>
         </scene>
         <!--Recent-->
         <scene sceneID="vrA-9j-sqe">
@@ -320,6 +352,6 @@
         <image name="search-7.png" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="qmE-6F-Gxr"/>
+        <segue reference="hlq-VB-bsO"/>
     </inferredMetricsTieBreakers>
 </document>
