@@ -35,6 +35,8 @@ class ViewController: UIViewController {
   @IBOutlet weak var favoriteLabel: UILabel!
   
   var managedContext: NSManagedObjectContext!
+  var currentBowTie: Bowtie!
+  var errorMessage: String?
   
   func insertSampleData(){
     let fetch = NSFetchRequest<Bowtie>(entityName: "Bowtie")
@@ -105,8 +107,8 @@ class ViewController: UIViewController {
     
     do{
       let results = try managedContext.fetch(request)
-      
-      populate(bowtie:results.first!)
+      currentBowTie = results.first
+      populate(bowtie:currentBowTie!)
     }
     catch let error as NSError{
       print("Could not fetch \(error), \(error.userInfo)")
@@ -115,15 +117,95 @@ class ViewController: UIViewController {
 
   // MARK: - IBActions
   @IBAction func segmentedControl(_ sender: AnyObject) {
-
+    guard let control =  sender as? UISegmentedControl else {
+      return
+    }
+    let selectedValue = control.titleForSegment(at: control.selectedSegmentIndex)
+    
+    let request = NSFetchRequest<Bowtie>(entityName: "Bowtie")
+    request.predicate = NSPredicate(format: "searchKey == %@", selectedValue!)
+    
+    do{
+      let results = try managedContext.fetch(request)
+      currentBowTie = results.first
+      populate(bowtie: currentBowTie)
+    }
+    catch let error as NSError{
+      print("Cant't fetch \(error) \(error.userInfo)")
+    }
   }
 
   @IBAction func wear(_ sender: AnyObject) {
-
+    currentBowTie.timesWorn += 1
+    currentBowTie.lastWorn = NSDate()
+    do{
+      try managedContext.save()
+      populate(bowtie: currentBowTie)
+    }
+    catch let error as NSError{
+      print("Could not fetch \(error), \(error.userInfo)")
+    }
+    
+    
   }
   
   @IBAction func rate(_ sender: AnyObject) {
-
+    var message = "Rate this bowtie."
+    if let error = errorMessage{
+      message += error
+    }
+    let alert = UIAlertController(title: "New rating",
+                                  message: message,
+                                  preferredStyle: .alert)
+    alert.addTextField{ (textfield) in
+      textfield.keyboardType = .decimalPad
+    }
+    
+    let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+    let saveAction = UIAlertAction(title: "Save", style: .default){
+      [unowned self] action in
+      
+      guard let textfield = alert.textFields?.first else{
+        return
+      }
+      
+      self.update(rating: textfield.text)
+    }
+    
+    alert.addAction(cancelAction)
+    alert.addAction(saveAction)
+    
+    present(alert, animated: true)
+    errorMessage = nil
+  }
+  
+  private func update(rating: String?){
+    guard let ratingString = rating,
+      let rating = Double(ratingString) else{
+        return
+    }
+    
+    do{
+      currentBowTie.rating = rating
+      try managedContext.save()
+      populate(bowtie: currentBowTie)
+    }
+    catch let error as NSError{
+      if error.domain == NSCocoaErrorDomain &&
+        (error.code == NSValidationNumberTooLargeError ||
+          error.code == NSValidationNumberTooSmallError) {
+        if error.code == NSValidationNumberTooLargeError{
+          errorMessage = "\n Your Rating is too high"
+        }else {
+          errorMessage = "\n Your Rating is too low"
+        }
+        rate(currentBowTie)
+        
+      }
+      else{
+        print("Could not fetch \(error), \(error.userInfo)")
+      }
+    }
   }
   
 
