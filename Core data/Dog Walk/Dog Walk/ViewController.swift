@@ -21,9 +21,11 @@
  */
 
 import UIKit
+import CoreData
 
 class ViewController: UIViewController {
 
+  var managedContext: NSManagedObjectContext!
   // MARK: - Properties
   lazy var dateFormatter: DateFormatter = {
     let formatter = DateFormatter()
