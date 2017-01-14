@@ -49,7 +49,16 @@ class ViewController: UIViewController {
 extension ViewController {
 
   @IBAction func add(_ sender: UIBarButtonItem) {
-//    walks.append(NSDate())
+    let walk = Walk(context: managedContext)
+    walk.date = NSDate()
+    currentDog?.addToWalks(walk)
+    do{
+      try managedContext.save()
+    }
+    catch let error as NSError{
+      print("Save error: \(error) \(error.userInfo)")
+    }
+    
     tableView.reloadData()
   }
 }
@@ -72,6 +81,22 @@ extension ViewController: UITableViewDataSource {
     return cell
   }
 
+  func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    guard let walkToRemove = currentDog?.walks?[indexPath.row] as? Walk,
+      editingStyle == .delete else{
+        return
+    }
+    
+    managedContext.delete(walkToRemove)
+    
+    do{
+      try managedContext.save()
+      tableView.deleteRows(at: [indexPath], with: .fade)
+    } catch let error as NSError{
+      print("Saving error: \(error) \(error.userInfo)")
+    }
+    
+  }
   func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
     return "List of Walks"
   }
