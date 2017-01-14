@@ -1,25 +1,3 @@
-/**
- * Copyright (c) 2016 Razeware LLC
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
-
 import UIKit
 import CoreData
 
@@ -33,7 +11,8 @@ class ViewController: UIViewController {
     formatter.timeStyle = .medium
     return formatter
   }()
-  var walks: [NSDate] = []
+  
+  var currentDog: Dog?
 
   // MARK: - IBOutlets
   @IBOutlet var tableView: UITableView!
@@ -43,6 +22,26 @@ class ViewController: UIViewController {
     super.viewDidLoad()
 
     tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+    let dogName = "Guffy"
+    let dogFetch: NSFetchRequest<Dog> = Dog.fetchRequest()
+    
+    dogFetch.predicate = NSPredicate(format: "%K = %@", #keyPath(Dog.name), dogName)
+    
+    do{
+      let result = try managedContext.fetch(dogFetch)
+      if result.count > 0{
+        currentDog = result.first
+      }
+      else{
+        currentDog = Dog(context: managedContext)
+        currentDog?.name = dogName
+        try managedContext.save()
+      }
+    }
+    catch let error as NSError{
+      print("Fetch error: \(error) \(error.userInfo)")
+    }
+    
   }
 }
 
@@ -50,7 +49,7 @@ class ViewController: UIViewController {
 extension ViewController {
 
   @IBAction func add(_ sender: UIBarButtonItem) {
-    walks.append(NSDate())
+//    walks.append(NSDate())
     tableView.reloadData()
   }
 }
@@ -59,13 +58,17 @@ extension ViewController {
 extension ViewController: UITableViewDataSource {
 
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return walks.count
+    guard let currentWalks = currentDog?.walks else{ return 1 }
+    return currentWalks.count
   }
 
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let date = walks[indexPath.row]
     let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-    cell.textLabel?.text = dateFormatter.string(from: date as Date)
+    guard let walk = currentDog?.walks?[indexPath.row] as? Walk,
+      let walkDate = walk.date as? Date else {
+        return cell
+    }
+    cell.textLabel?.text = dateFormatter.string(from: walkDate)
     return cell
   }
 
